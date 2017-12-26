@@ -2,6 +2,7 @@
 var restify = require('restify')
 
 var toolsApi = require('./Api/toolsApi')
+var todosApi = require('./Api/todosApi')
 
 var mongoose = require('mongoose')
 
@@ -45,6 +46,7 @@ server.use(restify.plugins.queryParser())
 server.use(restify.plugins.bodyParser())
 
 toolsApi(server)
+todosApi(server)
 
 server.get('/echo/:name', function (req, res, next) {
   res.send(req.params)

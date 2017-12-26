@@ -2,12 +2,12 @@
   <div class="todo-list">
     <v-list light subheader>
       <v-subheader>Todo</v-subheader>
-      <todo v-for="todo in listTodo" :key="todo.id" :todo="todo" @updateChecked="onUpdateChecked"></todo>
+      <todo v-for="todo in listTodo" :key="todo._id" :todo="todo" @updateChecked="onUpdateChecked" @remove="removeTodo"></todo>
     </v-list>
     <v-divider></v-divider>
     <v-list light subheader>
       <v-subheader>Done</v-subheader>
-      <todo v-for="todo in listDone" :key="todo.id" :todo="todo" :checked="true" @updateChecked="onUpdateChecked"></todo>
+      <todo v-for="todo in listDone" :key="todo._id" :todo="todo" :checked="true" @updateChecked="onUpdateChecked" @remove="removeTodo"></todo>
     </v-list>
     <v-btn fab fixed right bottom @click="dialogOpen=true" color="teal">
       <v-icon>add</v-icon>
@@ -18,9 +18,10 @@
 </template>
 
 <script>
-import { filter, find } from 'lodash'
+import { filter, find, remove } from 'lodash'
 
 import Todo from './TodoView.vue'
+import axios from 'axios'
 import TodoCreate from './TodoCreateView.vue'
 
 export default {
@@ -31,36 +32,51 @@ export default {
   methods: {
     onUpdateChecked: function (todo, checked) {
       const currentTodo = find(this.todoList, (t) => {
-        return t.id === todo.id
+        return t._id === todo._id
       })
       currentTodo.checked = checked
+      console.log(todo)
+      if (checked) {
+        axios.post(`/api/todos/${todo._id}/check`).then((response) => {
+
+        })
+      } else {
+        axios.post(`/api/todos/${todo._id}/uncheck`).then((response) => {
+
+        })
+      }
     },
     addTodo: function (text) {
-      this.todoList.push({
-        id: `todo-${this.todoList.length + 1}`,
+      const data = {
         label: text,
         checked: false
+      }
+
+      axios.post('http://localhost:8080/api/todos', data).then((response) => {
+        const todo = response.data
+        this.todoList.push(todo)
+      })
+    },
+    removeTodo: function (todo) {
+      axios.delete(`/api/todos/${todo._id}`).then(() => {
+        this.todoList = remove(this.todoList, (t) => {
+          return t._id !== todo._id
+        })
       })
     }
   },
   data () {
     return {
+      todoList: [],
       notifications: false,
-      todoList: [{
-        id: 'todo-1',
-        label: 'Refactor plugin',
-        checked: false
-      }, {
-        id: 'todo-2',
-        label: 'Change style fo button',
-        checked: false
-      }, {
-        id: 'todo-3',
-        label: 'initialize project',
-        checked: true
-      }],
       dialogOpen: false
     }
+  },
+  created () {
+    axios.get('/api/todos').then((response) => {
+      console.log(response.data)
+      this.todoList = response.data
+    })
   },
   computed: {
     listTodo () {

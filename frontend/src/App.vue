@@ -3,7 +3,6 @@
     <v-app>
       <header-view></header-view>
       <main class="content" :class="{'content--header-opened': headerIsOpen }">
-        <img src="./assets/logo.png" alt="Vue.js PWA">
         <router-view></router-view>
       </main>
     </v-app>
@@ -44,7 +43,7 @@ main {
 }
 
 .content {
-  padding-left: 20px;
+  padding: 20px;
   margin-left: 60px;
   transition: margin-left 0.2s;
   &--header-opened {

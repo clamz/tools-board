@@ -4,7 +4,10 @@
       <v-checkbox v-model="isChecked" @click.prevent.stop="toggleCheckbox"></v-checkbox>
     </v-list-tile-action>
     <v-list-tile-content>
-      <v-list-tile-title>{{ todo.label }}</v-list-tile-title>
+      <v-list-tile-title class="todo__title">
+        <span class="todo__label" :class="{ 'todo__label--checked': isChecked }">{{ todo.label }}</span>
+        <span @click.prevent.stop="removeTodo" class="todo__remove-icon"><v-icon>close</v-icon></span>
+      </v-list-tile-title>
     </v-list-tile-content>
   </v-list-tile>
 </template>
@@ -21,6 +24,9 @@ export default {
     toggleCheckbox: function () {
       this.isChecked = !this.isChecked
       this.$emit('updateChecked', this.todo, this.isChecked)
+    },
+    removeTodo: function () {
+      this.$emit('remove', this.todo)
     }
   }
 }
@@ -28,8 +34,18 @@ export default {
 
 <style lang="scss">
   .todo {
-    &--checked {
-      text-decoration: line-through;
+    &__title {
+      display: flex;
+    }
+
+    &__label {
+      flex: 1;
+      &--checked {
+        text-decoration: line-through;
+      }
+    }
+    &__remove-icon {
+      //float: right;
     }
   }
 </style>

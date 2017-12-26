@@ -5,7 +5,7 @@
         Create a todo
       </v-card-title>
       <v-card-text>
-        <v-text-field label="Text" v-model="text" required></v-text-field>
+        <v-text-field label="Text" v-model="text" ref="text" required @keyup.enter="save"></v-text-field>
       </v-card-text>
       <v-card-actions>
           <v-spacer></v-spacer>
@@ -29,13 +29,18 @@ export default {
     save: function () {
       this.isOpen = false
       this.$emit('save', this.text)
+      this.text = ''
     }
   },
   watch: {
     open: function () {
+      debugger
       this.isOpen = this.open
     },
     isOpen: function () {
+      setTimeout(() => {
+        this.$refs.text.$el.querySelector('input').focus()
+      })
       if (!this.isOpen) this.$emit('close')
     }
   }

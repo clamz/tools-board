@@ -12,7 +12,7 @@ Vue.use(Vuetify, {
   theme: {
     primary: 'red',
     secondary: 'yellow',
-    accent: 'blue',
+    accent: '#1976d2',
     error: 'green'
   }
 })
