@@ -13,7 +13,7 @@
       <v-icon>add</v-icon>
     </v-btn>
 
-    <todo-create :open="dialogOpen" @close="dialogOpen = false"></todo-create>
+    <todo-create :open="dialogOpen" @close="dialogOpen = false" @save="this.addTodo"></todo-create>
   </div>
 </template>
 
@@ -30,43 +30,46 @@ export default {
   },
   methods: {
     onUpdateChecked: function (todo, checked) {
-      const currentTodo = find(this.todoList[0], (t) => {
+      const currentTodo = find(this.todoList, (t) => {
         return t.id === todo.id
       })
       currentTodo.checked = checked
+    },
+    addTodo: function (text) {
+      this.todoList.push({
+        id: `todo-${this.todoList.length + 1}`,
+        label: text,
+        checked: false
+      })
     }
   },
   data () {
     return {
       notifications: false,
       todoList: [{
-        todo1: {
-          id: 'todo-1',
-          label: 'Refactor plugin',
-          checked: false
-        },
-        todo2: {
-          id: 'todo-2',
-          label: 'Change style fo button',
-          checked: false
-        },
-        todo3: {
-          id: 'todo-3',
-          label: 'initialize project',
-          checked: true
-        }
+        id: 'todo-1',
+        label: 'Refactor plugin',
+        checked: false
+      }, {
+        id: 'todo-2',
+        label: 'Change style fo button',
+        checked: false
+      }, {
+        id: 'todo-3',
+        label: 'initialize project',
+        checked: true
       }],
       dialogOpen: false
     }
   },
   computed: {
     listTodo () {
-      return filter(this.todoList[0], (t) => {
+      return filter(this.todoList, (t) => {
         return !t.checked
       })
     },
     listDone () {
-      return filter(this.todoList[0], (todo) => {
+      return filter(this.todoList, (todo) => {
         return todo.checked
       })
     }

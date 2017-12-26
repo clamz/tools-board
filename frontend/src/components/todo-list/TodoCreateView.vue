@@ -10,7 +10,7 @@
       <v-card-actions>
           <v-spacer></v-spacer>
         <v-btn flat @click.native="isOpen = false">Close</v-btn>
-        <v-btn flat @click.native="isOpen = false">Save</v-btn>
+        <v-btn flat @click.native="save">Save</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -20,10 +20,17 @@
 export default {
   data () {
     return {
+      text: '',
       isOpen: this.open
     }
   },
   props: ['open'],
+  methods: {
+    save: function () {
+      this.isOpen = false
+      this.$emit('save', this.text)
+    }
+  },
   watch: {
     open: function () {
       this.isOpen = this.open
