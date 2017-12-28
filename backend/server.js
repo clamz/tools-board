@@ -23,19 +23,6 @@ mongoose.connect('mongodb://192.168.33.10/toolsBoard', opts)
     console.log('failed to mongo is successful')
   })
 
-var toolsSchema = new mongoose.Schema({
-  label: String,
-  doc: String,
-  date: { type: Date, default: Date.now }
-})
-
-var toolsModel = mongoose.model('tools', toolsSchema)
-
-toolsModel.find(null, (err, tools) => {
-  if (err) { throw err }
-  console.log(tools)
-})
-
 const server = restify.createServer({
   name: 'myapp',
   version: '1.0.0'

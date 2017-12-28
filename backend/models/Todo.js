@@ -3,7 +3,7 @@ const mongooseTimestamp = require('mongoose-timestamp')
 
 const todoSchema = new mongoose.Schema({
   label: String,
-  checked: { type: Boolean, default: false },
+  state: { type: String, default: 'todo' },
   date: { type: Date, default: Date.now }
 }, { collection: 'todos' })
 

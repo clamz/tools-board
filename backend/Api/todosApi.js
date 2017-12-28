@@ -26,10 +26,14 @@ module.exports = function (server) {
     next()
   })
 
-  server.post('/todos/:id/check', function (req, res, next) {
-    Todo.findOneAndUpdate({ '_id': req.params.id }, { checked: true }, null, function (err, todo) {
+  server.post('/todos/:id/state', function (req, res, next) {
+    if (!req.body.state) {
+      res.send(new Error('state param is mandatory'))
+      next()
+      return
+    }
+    Todo.findOneAndUpdate({ '_id': req.params.id }, { state: req.body.state }, null, function (err, todo) {
       if (err) {
-        console.log('error', err)
         res.send(new Error('Error', err))
         return next()
       }

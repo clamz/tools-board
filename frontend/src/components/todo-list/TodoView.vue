@@ -1,11 +1,8 @@
 <template>
-  <v-list-tile avatar @click.prevent.stop="toggleCheckbox" class="todo" :class="{ 'todo--checked': isChecked }">
-    <v-list-tile-action>
-      <v-checkbox v-model="isChecked" @click.prevent.stop="toggleCheckbox"></v-checkbox>
-    </v-list-tile-action>
+  <v-list-tile avatar class="todo">
     <v-list-tile-content>
       <v-list-tile-title class="todo__title">
-        <span class="todo__label" :class="{ 'todo__label--checked': isChecked }">{{ todo.label }}</span>
+        <span class="todo__label">{{ todo.label }}</span>
         <span @click.prevent.stop="removeTodo" class="todo__remove-icon"><v-icon>close</v-icon></span>
       </v-list-tile-title>
     </v-list-tile-content>
@@ -14,17 +11,8 @@
 
 <script>
 export default {
-  data () {
-    return {
-      isChecked: this.checked
-    }
-  },
-  props: ['todo', 'checked'],
+  props: ['todo'],
   methods: {
-    toggleCheckbox: function () {
-      this.isChecked = !this.isChecked
-      this.$emit('updateChecked', this.todo, this.isChecked)
-    },
     removeTodo: function () {
       this.$emit('remove', this.todo)
     }
@@ -33,19 +21,28 @@ export default {
 </script>
 
 <style lang="scss">
+  @import 'colors';*
   .todo {
+    cursor: move;
+    background: $primary-color;
+    transition: all 0.2s;
+    margin: 5px;
+
+    &__label, .todo__remove-icon .icon {
+      color: $text-secondary-color !important;
+    }
+    &:hover {
+      // border-left: 5px solid $secondary-color;
+      // margin-left: 16px;
+      background: $primary-light-color;
+    }
+
     &__title {
       display: flex;
     }
 
     &__label {
       flex: 1;
-      &--checked {
-        text-decoration: line-through;
-      }
-    }
-    &__remove-icon {
-      //float: right;
     }
   }
 </style>
