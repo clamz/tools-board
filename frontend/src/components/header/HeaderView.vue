@@ -40,7 +40,6 @@ export default {
   },
   watch: {
     isLarge () {
-      console.log('hey')
       if (this.isLarge) {
         this.$store.dispatch('headerOpen')
       } else {
@@ -57,6 +56,7 @@ export default {
     height: 100%;
     background: $primary-color;
     position: fixed;
+    z-index: 100;
     color: white;
     width: 150px;
     transition: width 0.2s;
