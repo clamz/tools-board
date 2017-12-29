@@ -34,7 +34,6 @@ export default {
   },
   watch: {
     open: function () {
-      debugger
       this.isOpen = this.open
     },
     isOpen: function () {

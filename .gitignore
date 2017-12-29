@@ -7,6 +7,14 @@ yarn-error.log*
 /test/unit/coverage
 /test/e2e/reports
 selenium-debug.log
+frontend/dist
+frontend/node_modules
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/test/unit/coverage
+frontend/test/e2e/reports
+frontend/selenium-debug.log
 
 .cache-loader/
 

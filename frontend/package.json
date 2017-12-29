@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
+    "express-http-proxy": "^1.1.0",
     "lodash": "^4.17.4",
     "lodash-uuid": "0.0.3",
     "vue": "^2.5.2",

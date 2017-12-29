@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Vuex from 'vuex'
-import Hello from '@/components/Hello'
 import TodoList from '@/components/todo-list/TodoListView.vue'
 
 Vue.use(Router)
@@ -16,9 +15,9 @@ export default new Router({
       component: TodoList
     },
     {
-      path: '/test',
-      name: 'Test',
-      component: Hello
+      path: '/todos',
+      name: 'todos',
+      component: TodoList
     }
   ]
 })
