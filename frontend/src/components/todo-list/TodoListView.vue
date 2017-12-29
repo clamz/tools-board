@@ -1,14 +1,15 @@
 <template>
   <div class="todo-list">
-    <todo-list-sub-list group-title="Todo" :list="listTodo" state="todo"></todo-list-sub-list>
-    <todo-list-sub-list group-title="In progress" :list="listInProgress" state="in_progress"></todo-list-sub-list>
-    <todo-list-sub-list group-title="Done" :list="listDone" state="done"></todo-list-sub-list>
+    <todo-list-sub-list group-title="Todo" :list="listTodo" :state="states.TODO"></todo-list-sub-list>
+    <todo-list-sub-list group-title="In progress" :list="listInProgress" :state="states.IN_PROGRESS"></todo-list-sub-list>
+    <todo-list-sub-list group-title="Done" :list="listDone" :state="states.DONE"></todo-list-sub-list>
     <v-btn fab fixed right bottom @click="dialogOpen=true" color="custom">
       <v-icon>add</v-icon>
     </v-btn>
     <todo-create :open="dialogOpen" @close="dialogOpen = false" @save="this.addTodo"></todo-create>
   </div>
 </template>
+
 <script>
 import { filter } from 'lodash'
 import axios from 'axios'
@@ -16,13 +17,28 @@ import TodoCreate from './TodoCreateView.vue'
 
 import TodoListSubList from './TodoSubListView.vue'
 
+const STATES = {
+  TODO: 'todo',
+  IN_PROGRESS: 'in_progress',
+  DONE: 'done'
+}
+
 export default {
   components: {
     TodoCreate,
     TodoListSubList
   },
+  /**
+   * Get todos before render the template
+   */
+  beforeRouteEnter (to, from, next) {
+    axios.get('/api/todos').then((response) => {
+      next(vm => vm.setData(response.data))
+    })
+  },
   data () {
     return {
+      states: STATES,
       todoList: [],
       listTodo: [],
       listInProgress: [],
@@ -31,25 +47,26 @@ export default {
       dialogOpen: false
     }
   },
-  created () {
-    axios.get('/api/todos').then((response) => {
-      this.todoList = response.data
-      return response.data
-    }).then(() => {
+  methods: {
+    setData (todoList) {
+      this.todoList = todoList
+
       this.listTodo = filter(this.todoList, (t) => {
-        return t.state === 'todo'
+        return t.state === STATES.TODO
       })
 
       this.listInProgress = filter(this.todoList, (t) => {
-        return t.state === 'in_progress'
+        return t.state === STATES.IN_PROGRESS
       })
 
       this.listDone = filter(this.todoList, (t) => {
-        return t.state === 'done'
+        return t.state === STATES.DONE
       })
-    })
-  },
-  methods: {
+    },
+
+    /**
+     * Create a new todo
+     */
     addTodo: function (text) {
       const data = {
         label: text,
