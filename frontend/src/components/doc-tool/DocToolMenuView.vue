@@ -4,11 +4,11 @@
       <v-list>
         <v-list-group v-for="item in items" :value="item.active" v-bind:key="item.title">
 
-          <v-list-tile slot="item" @click="" :to="{name: 'todos'}">
+          <v-list-tile slot="item" @click="onItemClick(item)">
             <doc-tool-menu-item :item="item"></doc-tool-menu-item>
           </v-list-tile>
 
-          <v-list-tile v-for="subItem in item.items" v-bind:key="subItem.title" @click="">
+          <v-list-tile v-for="subItem in item.items" v-bind:key="subItem.title" @click.stop="onItemClick(subItem)">
             <sub-menu-item :sub-item="subItem"></sub-menu-item>
           </v-list-tile>
         </v-list-group>
@@ -26,21 +26,13 @@ export default {
     DocToolMenuItem,
     SubMenuItem
   },
-  data () {
-    return {
-      items: [
-        {
-          action: 'mouse',
-          title: 'Todo',
-          items: [{
-            action: '',
-            title: 'test'
-          }]
-        }, {
-          action: '',
-          title: 'Doc'
-        }
-      ]
+  props: ['items'],
+  methods: {
+    onItemClick: function (item) {
+      // emit the click only if the item doesn't have childs
+      if (item && !item.items) {
+        this.$emit('item-selected', item)
+      }
     }
   }
 }

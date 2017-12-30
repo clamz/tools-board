@@ -1,6 +1,6 @@
 <template>
   <div class="doc-tool-content-editor">
-    <textarea class="doc-tool-content-editor__textarea" ref="textarea" v-model="markdownText"></textarea>
+    <textarea class="doc-tool-content-editor__textarea" ref="textarea" v-model="content"></textarea>
   </div>
 </template>
 
@@ -13,6 +13,16 @@ export default {
     focus: function () {
       if (this.focus === true && this.$refs.textarea) {
         this.$refs.textarea.focus()
+      }
+    }
+  },
+  computed: {
+    content: {
+      get: function () {
+        return this.markdownText
+      },
+      set: function (newValue) {
+        this.$emit('content-change', newValue)
       }
     }
   }

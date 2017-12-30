@@ -1,15 +1,16 @@
 <template>
   <div class="doc-tool-content">
     <content-preview
-      :markdown-text="markdownText"
+      :markdown-text="item.content"
       class="doc-tool-content__preview"
       :class="{ 'doc-tool-content__preview--hide': isEdit }">
     </content-preview>
     <content-editor
       class="doc-tool-content__edit-area"
       :class="{ 'doc-tool-content__edit-area--show': isEdit, 'doc-tool-content__edit-area--fullscreen': isFullscreen }"
-      :markdown-text="markdownText"
-      :focus="isEdit">
+      :markdown-text="item.content"
+      :focus="isEdit"
+      @content-change="onContentChange">
     </content-editor>
     <content-actions
       @toggle-edit="toggleEdit"
@@ -29,12 +30,11 @@ export default {
     ContentEditor,
     ContentActions
   },
+  props: ['item'],
   data () {
     return {
       isEdit: false,
-      isFullscreen: false,
-      markdownText: `# hey  comment tu vas
-      `
+      isFullscreen: false
     }
   },
   methods: {
@@ -43,6 +43,9 @@ export default {
     },
     toggleFullscreen: function (isFullscreen) {
       this.isFullscreen = isFullscreen
+    },
+    onContentChange: function (content) {
+      this.item.content = content
     }
   }
 }
