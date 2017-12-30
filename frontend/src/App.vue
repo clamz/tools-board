@@ -31,9 +31,12 @@ export default {
 body {
   margin: 0;
 }
+* {
+  box-sizing: border-box;
+}
 
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: $text-color;
@@ -46,9 +49,6 @@ main {
   padding: 20px;
   margin-left: 60px;
   transition: margin-left 0.2s;
-  &--header-opened {
-    margin-left: 150px;
-  }
 }
 
 .card {

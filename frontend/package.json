@@ -19,6 +19,7 @@
     "lodash": "^4.17.4",
     "lodash-uuid": "0.0.3",
     "vue": "^2.5.2",
+    "vue-markdown": "^2.2.4",
     "vue-router": "^3.0.1",
     "vuedraggable": "^2.15.0",
     "vuetify": "^0.17.3",
