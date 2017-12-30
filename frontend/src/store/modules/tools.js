@@ -18,7 +18,6 @@ const actions = {
   initTools: (store) => {
     return new Promise((resolve) => {
       axios.get('http://localhost:8080/api/tools').then((response) => {
-        console.log(response)
         store.commit('SET_TOOLS', response.data)
         resolve()
       })
