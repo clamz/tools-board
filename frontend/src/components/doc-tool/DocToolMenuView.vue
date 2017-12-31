@@ -8,7 +8,7 @@
             <doc-tool-menu-item :item="item"></doc-tool-menu-item>
           </v-list-tile>
 
-          <v-list-tile v-for="subItem in item.items" v-bind:key="subItem.title" @click.stop="onItemClick(subItem)">
+          <v-list-tile v-for="subItem in item.items" ng-if="item.items && item.items.length > 0" v-bind:key="subItem.title" @click.stop="onItemClick(subItem)">
             <sub-menu-item :sub-item="subItem"></sub-menu-item>
           </v-list-tile>
         </v-list-group>

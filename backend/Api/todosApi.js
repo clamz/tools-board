@@ -10,7 +10,6 @@ module.exports = function (server) {
   })
 
   server.post('/todos', function (req, res, next) {
-    console.log(req)
     if (!req.body.label) {
       res.send(new Error('Label is mandatory'))
       next()

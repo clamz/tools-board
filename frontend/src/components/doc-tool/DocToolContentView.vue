@@ -72,7 +72,7 @@ export default {
       background: white;
       &--show {
         display: block;
-        height: 95vh;
+        height: 90vh;
       }
 
       &--fullscreen {

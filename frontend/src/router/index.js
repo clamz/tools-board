@@ -21,7 +21,7 @@ export default new Router({
       component: TodoList
     },
     {
-      path: '/doc',
+      path: '/doc/:id?',
       name: 'doc',
       component: DocTool
     }
