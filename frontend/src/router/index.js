@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Vuex from 'vuex'
 import TodoList from '@/components/todo-list/TodoListView.vue'
 import DocTool from '@/components/doc-tool/DocToolView.vue'
+import Chat from '@/components/chat/Chat.vue'
 
 Vue.use(Router)
 Vue.use(Vuex)
@@ -24,6 +25,11 @@ export default new Router({
       path: '/doc/:id?',
       name: 'doc',
       component: DocTool
+    },
+    {
+      path: '/chat',
+      name: 'chat',
+      component: Chat
     }
   ]
 })

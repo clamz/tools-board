@@ -5,8 +5,11 @@ import App from './App'
 import router from './router'
 import store from './store'
 import Vuetify from 'vuetify'
+import VueWebsocket from 'vue-websocket'
 
 import 'vuetify/dist/vuetify.min.css'
+
+Vue.use(VueWebsocket, 'ws://localhost:8081')
 
 Vue.use(Vuetify, {
   theme: {

@@ -1,11 +1,11 @@
 
 var restify = require('restify')
+var socketIo = require('socket.io')
+var mongoose = require('mongoose')
 
 var toolsApi = require('./Api/toolsApi')
 var todosApi = require('./Api/todosApi')
 var docsApi = require('./Api/docsApi')
-
-var mongoose = require('mongoose')
 
 const opts = {
   promiseLibrary: global.Promise,
@@ -37,9 +37,16 @@ toolsApi(server)
 todosApi(server)
 docsApi(server)
 
-server.get('/echo/:name', function (req, res, next) {
-  res.send(req.params)
-  return next()
+const io = socketIo.listen(server.server)
+
+io.on('connection', function(socket) {
+  console.log('fdsfds')
+  // Send a hello message with the user's id
+  socket.emit('message', 'Hey cdszds')
+  socket.on('add', function(message) {
+    console.log('message:' + message)
+    io.emit('add message', message)
+  })
 })
 
 server.listen(8081, function () {

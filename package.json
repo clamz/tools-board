@@ -22,7 +22,8 @@
     "lodash-uuid": "0.0.3",
     "mongoose": "^4.13.6",
     "mongoose-timestamp": "^0.6.0",
-    "restify": "^6.3.4"
+    "restify": "^6.3.4",
+    "socket.io": "^2.0.4"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.5",

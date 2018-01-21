@@ -46,7 +46,6 @@ main {
 }
 
 .content {
-  padding: 20px;
   margin-left: 60px;
   transition: margin-left 0.2s;
 }
